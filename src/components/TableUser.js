@@ -1,21 +1,8 @@
 import './TableUser.scss';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import useFetch from '../customize/useFetch';
 
 const TableUser = () => {
-    const [dataUsers, setDataUsers] = useState([]);
-
-    async function fetchData() {
-        let result = await axios.get('http://localhost:8888/api/show-user');
-        let listUsers = result.data;
-
-        setDataUsers(listUsers);
-    }
-    //DidMount
-    useEffect(() => {
-        fetchData();
-    }, []);
-
+    const dataUsers = useFetch('http://localhost:8888/api/show-user');
 
     return (
         <div className="table-container">
