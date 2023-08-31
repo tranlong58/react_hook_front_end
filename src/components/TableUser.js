@@ -7,7 +7,7 @@ const TableUser = () => {
     return (
         <div className="table-container">
             <div id="title-table-user">
-                List Users
+                Users list
             </div>
             <table id="table-user">
                 <thead>
