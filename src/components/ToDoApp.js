@@ -64,34 +64,3 @@ const ToDoApp = (props) => {
 }
 
 export default ToDoApp;
-
-
-// import './ToDoApp.scss'
-
-// const ToDoApp = (props) => {
-//     let { listActions, title, deleteAction, author } = props;
-
-//     return (
-//         <div className="container">
-//             <div className="title">{title}</div>
-//             <div className="group-child">
-//                 {listActions.map(action => {
-//                     return (
-//                         <li className="child" key={action.id}> {action.content}
-//                             &nbsp;&nbsp; <span onClick={() => deleteAction(action.id)}>x</span>
-//                         </li>
-//                     );
-//                 })}
-//             </div>
-
-//             <div className='input'>
-//                 <input type="text" ></input>
-//                 <button type="button" >Add new action to {author}</button>
-//             </div>
-
-//             <hr />
-//         </div>
-//     );
-// }
-
-// export default ToDoApp;

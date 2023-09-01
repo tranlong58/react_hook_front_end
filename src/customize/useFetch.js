@@ -12,7 +12,7 @@ const useFetch = (url) => {
     //DidMount
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [url]);
 
     return data;
 }
