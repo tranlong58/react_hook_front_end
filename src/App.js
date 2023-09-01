@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import TopNav from './components/TopNav';
 import ToDoApp from './components/ToDoApp';
 import TableUser from './components/TableUser';
+import UserDetailPage from './components/UserDetailPage';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
   const [listActions, setListActions] = useState([
@@ -46,11 +47,14 @@ const App = () => {
               author='Jerry'
             />
           </Route>
-          <Route path='/table-user' exact>
+          <Route path='/user/table' exact>
             <TableUser />
           </Route>
           <Route path='/secret' exact>
             <h1 style={{ marginTop: '10px' }}> Secret </h1>
+          </Route>
+          <Route path='/user/detail/:id'>
+            <UserDetailPage />
           </Route>
         </Switch>
       </div>

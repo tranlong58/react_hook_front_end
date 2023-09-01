@@ -26,9 +26,9 @@ const ToDoApp = (props) => {
 
     return (
         author === 'all' ? ( //render all actions without input div
-            <div className="container">
-                <div className="title">{title}</div>
-                <div className="group-action">
+            <div className="container-todo">
+                <div className="title-todo">{title}</div>
+                <div className="group-action-todo">
                     {preListActions.map(action => {
                         return (
                             <li key={action.id}> {action.content} ({action.author})
@@ -40,9 +40,9 @@ const ToDoApp = (props) => {
                 <hr />
             </div>
         ) : ( //render actions for author with input div
-            <div className="container">
-                <div className="title">{title}</div>
-                <div className="group-action">
+            <div className="container-todo">
+                <div className="title-todo">{title}</div>
+                <div className="group-action-todo">
                     {listActions.map(action => {
                         return (
                             <li key={action.id}> {action.content}
@@ -52,7 +52,7 @@ const ToDoApp = (props) => {
                     })}
                 </div>
 
-                <div className='input'>
+                <div className='input-todo'>
                     <input type="text" value={newAction} onChange={(event) => handleCreateNewAction(event)}></input>
                     <button type="button" onClick={() => handleAddAction()} >Add new action to {author}</button>
                 </div>
