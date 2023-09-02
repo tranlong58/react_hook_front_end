@@ -4,15 +4,16 @@ import axios from 'axios';
 const useFetch = (url) => {
     const [data, setData] = useState([]);
 
-    async function fetchData() {
-        let res = await axios.get(url);
-        let data_fetch = res.data;
-
-        setData(data_fetch);
-    }
-
-    //DidMount
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(url);
+                setData(res.data);
+            } catch (error) {
+                // Xử lý lỗi nếu cần thiết
+            }
+        };
+
         fetchData();
     }, [url]);
 

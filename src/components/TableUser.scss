@@ -7,7 +7,37 @@
     font-size: 30px;
     font-weight: bold;
     margin-top: 10px;
+    //display: flex;
+    position: relative;
     text-align: center;
+
+    .add-btn {
+        position: absolute;
+        right: 30px;
+        top: -3px;
+
+        a,
+        button {
+            display: block;
+            background-color: #235ff5;
+            color: white;
+            border: none;
+            padding: 8px 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        a:hover,
+        button:hover {
+            opacity: 0.6;
+        }
+    }
+
+    .add-btn:hover {
+        background-color: #ddd;
+    }
 }
 
 .content-user-table {
@@ -49,24 +79,35 @@
         border: 1px solid #ddd;
         padding: 8px;
 
-        a {
-            background-color: #4CAF50;
-            border: none;
+        a,
+        button {
             color: black;
+            border: none;
             padding: 4px 8px;
+            margin: 0px 8px;
             text-align: center;
             text-decoration: none;
             font-size: 20px;
         }
 
-        a:hover {
+        a:hover,
+        button:hover {
             opacity: 0.6;
             color: white;
+        }
+
+        .edit-btn {
+            background-color: #4CAF50;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
         }
     }
 
     td:last-child {
         text-align: center;
+        width: 200px;
     }
 
 }
