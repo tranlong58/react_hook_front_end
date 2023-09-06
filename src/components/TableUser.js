@@ -1,24 +1,44 @@
 import './TableUser.scss';
 import useFetch from '../customize/useFetch';
 import Modal from 'react-bootstrap/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserAddPage from './UserAddPage';
 import UserEditPage from './UserEditPage';
 import UserDeletePage from './UserDeletePage';
 
 const TableUser = () => {
-    const dataUsers = useFetch('http://localhost:8888/api/show-user');
+    const [dataUsers, setDataUsers] = useState([]);
+    const dataFetch = useFetch('http://localhost:8888/api/show-user'); //get all user
     //console.log(dataUsers);
+    useEffect(() => {
+        setDataUsers(dataFetch);
+    }, [dataFetch]);
 
     const [showAddModal, setShowAddModal] = useState(false);
-    const handleCloseAddModal = () => setShowAddModal(false);
+    const handleCloseAddModal = () => {
+        setShowAddModal(false);
+    };
+    const handleAddNewUser = (newUser) => {
+        let new_dataUsers = dataUsers;
+        new_dataUsers.push(newUser);
+
+        setDataUsers(new_dataUsers);
+    }
     const handleShowAddModal = () => setShowAddModal(true);
+
 
     const [showEditModal, setShowEditModal] = useState(false);
     const handleCloseEditModal = () => {
         setEditUser(null);
         setShowEditModal(false);
     };
+    const handleUpdateUser = (updatedUser) => {
+        let new_dataUsers = dataUsers.filter(user => user.id !== updatedUser.id);
+        new_dataUsers.push(updatedUser);
+        new_dataUsers.sort((user1, user2) => user1.id - user2.id);
+
+        setDataUsers(new_dataUsers);
+    }
     const handleShowEditModal = (user) => {
         setEditUser(user);
         setShowEditModal(true);
@@ -30,6 +50,11 @@ const TableUser = () => {
         setDeleteUser(null);
         setShowDeleteModal(false);
     };
+    const handleDeleteUser = (deletedUser) => {
+        let new_dataUsers = dataUsers.filter(user => user.id !== deletedUser.id);
+
+        setDataUsers(new_dataUsers);
+    }
     const handleShowDeleteModal = (user) => {
         setDeleteUser(user);
         setShowDeleteModal(true);
@@ -44,7 +69,10 @@ const TableUser = () => {
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UserAddPage handleClose={handleCloseAddModal} />
+                    <UserAddPage
+                        handleClose={handleCloseAddModal}
+                        handleAdd={handleAddNewUser}
+                    />
                 </Modal.Body>
             </Modal>
 
@@ -56,6 +84,7 @@ const TableUser = () => {
                 <Modal.Body>
                     <UserEditPage
                         handleClose={handleCloseEditModal}
+                        handleUpdate={handleUpdateUser}
                         user={editUser}
                     />
                 </Modal.Body>
@@ -69,6 +98,7 @@ const TableUser = () => {
                 <Modal.Body>
                     <UserDeletePage
                         handleClose={handleCloseDeleteModal}
+                        handleDelete={handleDeleteUser}
                         user={deleteUser}
                     />
                 </Modal.Body>
