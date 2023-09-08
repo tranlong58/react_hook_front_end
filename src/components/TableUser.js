@@ -1,60 +1,82 @@
 import './TableUser.scss';
-import useFetch from '../customize/useFetch';
-import Modal from 'react-bootstrap/Modal';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
+import ReactPaginate from 'react-paginate';
 import UserAddPage from './UserAddPage';
 import UserEditPage from './UserEditPage';
 import UserDeletePage from './UserDeletePage';
 
 const TableUser = () => {
     const [dataUsers, setDataUsers] = useState([]);
-    const dataFetch = useFetch('http://localhost:8888/api/show-user'); //get all user
-    //console.log(dataUsers);
-    useEffect(() => {
-        setDataUsers(dataFetch);
-    }, [dataFetch]);
+    const [currPage, setCurrPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
 
+    useEffect(() => {
+        fetchUser(currPage);
+    }, [currPage]);
+
+    const fetchUser = async (page) => {
+        try {
+            const response = await axios.get(`http://localhost:8888/api/show-user?page=${page}`);
+            setTotalPage(response.data.numPage);
+            setDataUsers(response.data.usersByPage);
+        } catch (error) {
+            // Xử lý lỗi nếu cần thiết
+        }
+    };
+
+    const handlePageClick = (event) => {
+        //xóa class active của thẻ li cuối
+        // const listItems = document.querySelectorAll('ul.pagination li');
+        // const lastListItem = listItems[listItems.length - 2];
+        // lastListItem.classList.remove('active');
+
+        setCurrPage(event.selected + 1);
+        //console.log(event, currPage);
+    };
+
+    const handleFetch = async (type) => {
+        if (type === 'delete') {
+            if (dataUsers.length > 1) await fetchUser(currPage);
+            else {
+                // thêm class active cho thẻ li gần cuối
+                // const listItems = document.querySelectorAll('ul.pagination li');
+                // const lastListItem = listItems[listItems.length - 3];
+                // lastListItem.classList.add('active');
+
+                await fetchUser(currPage - 1);
+                setCurrPage(currPage - 1);
+            }
+        }
+        else await fetchUser(currPage);
+    }
+
+    //add modal
     const [showAddModal, setShowAddModal] = useState(false);
     const handleCloseAddModal = () => {
         setShowAddModal(false);
     };
-    const handleAddNewUser = (newUser) => {
-        let new_dataUsers = dataUsers;
-        new_dataUsers.push(newUser);
-
-        setDataUsers(new_dataUsers);
-    }
     const handleShowAddModal = () => setShowAddModal(true);
 
-
+    //edit modal
     const [showEditModal, setShowEditModal] = useState(false);
     const handleCloseEditModal = () => {
         setEditUser(null);
         setShowEditModal(false);
     };
-    const handleUpdateUser = (updatedUser) => {
-        let new_dataUsers = dataUsers.filter(user => user.id !== updatedUser.id);
-        new_dataUsers.push(updatedUser);
-        new_dataUsers.sort((user1, user2) => user1.id - user2.id);
-
-        setDataUsers(new_dataUsers);
-    }
     const handleShowEditModal = (user) => {
         setEditUser(user);
         setShowEditModal(true);
     };
     const [editUser, setEditUser] = useState(null); //user dang duoc select de Edit
 
+    //delete modal
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const handleCloseDeleteModal = () => {
         setDeleteUser(null);
         setShowDeleteModal(false);
     };
-    const handleDeleteUser = (deletedUser) => {
-        let new_dataUsers = dataUsers.filter(user => user.id !== deletedUser.id);
-
-        setDataUsers(new_dataUsers);
-    }
     const handleShowDeleteModal = (user) => {
         setDeleteUser(user);
         setShowDeleteModal(true);
@@ -71,7 +93,7 @@ const TableUser = () => {
                 <Modal.Body>
                     <UserAddPage
                         handleClose={handleCloseAddModal}
-                        handleAdd={handleAddNewUser}
+                        handleFetch={handleFetch}
                     />
                 </Modal.Body>
             </Modal>
@@ -84,7 +106,7 @@ const TableUser = () => {
                 <Modal.Body>
                     <UserEditPage
                         handleClose={handleCloseEditModal}
-                        handleUpdate={handleUpdateUser}
+                        handleFetch={handleFetch}
                         user={editUser}
                     />
                 </Modal.Body>
@@ -98,7 +120,7 @@ const TableUser = () => {
                 <Modal.Body>
                     <UserDeletePage
                         handleClose={handleCloseDeleteModal}
-                        handleDelete={handleDeleteUser}
+                        handleFetch={handleFetch}
                         user={deleteUser}
                     />
                 </Modal.Body>
@@ -124,7 +146,7 @@ const TableUser = () => {
                     </thead>
 
                     <tbody>
-                        {dataUsers.map(user => {
+                        {dataUsers && dataUsers.map(user => {
                             return (
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
@@ -141,6 +163,32 @@ const TableUser = () => {
                     </tbody>
 
                 </table>
+
+                <div className='page-navigation-table'>
+                    {
+                        totalPage &&
+                        <ReactPaginate
+                            nextLabel="next"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={2}
+                            pageCount={totalPage}
+                            previousLabel="previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
+                    }
+                </div>
             </div>
         </>
     );

@@ -4,24 +4,24 @@ import { useState } from 'react';
 import './UserAddPage.scss';
 
 const UserAddPage = (props) => {
-    const { handleClose, handleAdd } = props;
+    const { handleClose, handleFetch } = props;
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [city, setCity] = useState('');
 
     const handleSubmitBtn = async () => {
-        let data = {
+        let dataNewUser = {
             email: email,
             name: name,
             city: city,
         }
 
         if (email.trim() !== '' && name.trim() !== '' && city.trim() !== '') {
-            const res = await axios.post('http://localhost:8888/api/store-user', data); //create new user
-            data.id = res.data.id;
-            // console.log(data);
-            handleAdd(data);
+            await axios.post('http://localhost:8888/api/store-user', dataNewUser); //create new user
+            //dataNewUser.id = res.data.id;
+            // console.log(dataNewUser);
+            handleFetch('add');
             handleClose();
         } else {
             if (email.trim() === '') {

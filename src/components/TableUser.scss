@@ -112,3 +112,20 @@
     }
 
 }
+
+.page-navigation-table {
+    width: fit-content;
+    margin: 20px auto;
+
+    ul {
+        // padding: 20px;
+
+        li {
+
+            a {
+                padding: 10px 20px;
+                font-size: 18px;
+            }
+        }
+    }
+}

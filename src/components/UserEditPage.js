@@ -4,11 +4,11 @@ import './UserEditPage.scss';
 import { useState } from 'react';
 
 const UserEditPage = (props) => {
-    const { handleClose, handleUpdate, user } = props;
+    const { handleClose, handleFetch, user } = props;
 
     const id = user ? user.id : '';
-    const [email, setEmail] = useState(user ? user.email : '');
-    //const email = user ? user.email : '';
+    //const [email, setEmail] = useState(user ? user.email : '');
+    const email = user ? user.email : '';
     const [name, setName] = useState(user ? user.name : '');
     const [city, setCity] = useState(user ? user.city : '');
 
@@ -26,7 +26,7 @@ const UserEditPage = (props) => {
 
         if (name.trim() !== '' && city.trim() !== '') {
             await axios.post('http://localhost:8888/api/update-user', data); //update new user
-            handleUpdate(data);
+            handleFetch('update');
             handleClose();
         }
         else {
@@ -47,7 +47,7 @@ const UserEditPage = (props) => {
                 <legend>Edit user {id}</legend>
                 <div className="input-group">
                     <label>Email: </label>
-                    <input type="text" value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                    <input type="text" value={email} disabled></input>
                     {/* {email && <input type="text" value={email} onChange={(event) => setEmail(event.target.value)}></input>}
                     {!email && <input type="text" value='' onChange={(event) => setEmail(event.target.value)}></input>} */}
                 </div>

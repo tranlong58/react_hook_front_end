@@ -3,7 +3,7 @@ import axios from 'axios';
 import './UserDeletePage.scss';
 
 const UserDeletePage = (props) => {
-    const { handleClose, handleDelete, user } = props;
+    const { handleClose, handleFetch, user } = props;
 
     const id = user ? user.id : '';
     const email = user ? user.email : '';
@@ -12,8 +12,12 @@ const UserDeletePage = (props) => {
 
     const handleSubmitBtn = async () => {
         //alert(`${id} ${email} ${name} ${city}`);
-        await axios.post(`http://localhost:8888/api/delete-user/${id}`, user);
-        handleDelete(user);
+        let data = {
+            id: id,
+            email: email
+        }
+        await axios.post(`http://localhost:8888/api/delete-user`, data);
+        handleFetch('delete');
         handleClose();
     }
 
