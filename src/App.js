@@ -1,54 +1,46 @@
-import logo from './logo.svg';
+
 import './App.scss';
-import { useState } from 'react';
-
-import TopNav from './components/TopNav';
-import ToDoApp from './components/ToDoApp';
-import TableUser from './components/TableUser';
-
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import TopNavAdmin from './components/admin/TopNavAdmin';
+import TableUser from './components/admin/TableUser';
+
+import TopNavMain from './components/main/TopNavMain';
+import LoginPage from './components/LoginPage';
+
 const App = () => {
-  const [listActions, setListActions] = useState([
-    { id: '1', content: 'learning online', author: 'Tom' },
-    { id: '2', content: 'doing homework', author: 'Jerry' },
-    { id: '3', content: 'watching youtube', author: 'Jerry' }
-  ]);
 
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <TopNav />
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
         <Switch>
-          <Route path='/' exact>
-            <h1 style={{ marginTop: '10px' }} >Hello, here is My Reactjs-app.</h1>
+          {/* admin page */}
+          <Route path='/admin' exact>
+            <header className="App-header">
+              <TopNavAdmin />
+            </header>
+            <h1 style={{ marginTop: '10px' }} >Admin page.</h1>
           </Route>
-          <Route path='/user' exact>
+          <Route path='/admin/user' exact>
+            <header className="App-header">
+              <TopNavAdmin />
+            </header>
             <TableUser />
           </Route>
-          <Route path='/todo-app' exact>
-            <ToDoApp
-              listActions={listActions}
-              setListActions={setListActions}
-              title='ToDo app for all'
-              author='all'
-            />
-            <ToDoApp
-              listActions={listActions}
-              setListActions={setListActions}
-              title='ToDo app for Tom'
-              author='Tom'
-            />
-            <ToDoApp
-              listActions={listActions}
-              setListActions={setListActions}
-              title='ToDo app for Jerry'
-              author='Jerry'
-            />
+
+          {/* main page */}
+          <Route path='/main' exact>
+            <header className="App-header">
+              <TopNavMain />
+            </header>
+            <h1 style={{ marginTop: '10px' }} >Main page.</h1>
           </Route>
+
+          {/* login page */}
+          <Route path='/' exact>
+            <LoginPage />
+          </Route>
+
         </Switch>
       </div>
     </Router >

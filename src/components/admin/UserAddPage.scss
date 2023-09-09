@@ -1,4 +1,4 @@
-.form-delete-user {
+.form-create-user {
     width: 500px;
     margin: 0 auto;
     // padding-top: 50px;
@@ -17,28 +17,25 @@
             font-size: 20px;
             flex: 1;
             margin-right: 10px;
-
-            span {
-                font-weight: 700;
-            }
         }
 
         input {
             font-size: 20px;
             margin-right: 100px;
             width: 300px;
+            padding: 4px 8px;
         }
     }
 
     button {
-        background-color: #f44336;
+        background-color: #4CAF50;
         border: none;
         color: black;
         padding: 4px 12px;
         text-align: center;
         text-decoration: none;
         font-size: 20px;
-        margin: 10px 100px;
+        margin: 10px 280px;
         cursor: pointer;
     }
 

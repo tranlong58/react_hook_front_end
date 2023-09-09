@@ -27,24 +27,13 @@ const TableUser = () => {
     };
 
     const handlePageClick = (event) => {
-        //xóa class active của thẻ li cuối
-        // const listItems = document.querySelectorAll('ul.pagination li');
-        // const lastListItem = listItems[listItems.length - 2];
-        // lastListItem.classList.remove('active');
-
         setCurrPage(event.selected + 1);
-        //console.log(event, currPage);
     };
 
     const handleFetch = async (type) => {
         if (type === 'delete') {
             if (dataUsers.length > 1) await fetchUser(currPage);
             else {
-                // thêm class active cho thẻ li gần cuối
-                // const listItems = document.querySelectorAll('ul.pagination li');
-                // const lastListItem = listItems[listItems.length - 3];
-                // lastListItem.classList.add('active');
-
                 await fetchUser(currPage - 1);
                 setCurrPage(currPage - 1);
             }
@@ -130,7 +119,7 @@ const TableUser = () => {
                 <div className="title-user-table">
                     <div className='text'>Users list</div>
                     <div className='add-btn'>
-                        <button onClick={handleShowAddModal}>Add new user</button>
+                        <button onClick={handleShowAddModal}>Add new</button>
                     </div>
                 </div>
 
@@ -166,7 +155,7 @@ const TableUser = () => {
 
                 <div className='page-navigation-table'>
                     {
-                        totalPage &&
+                        totalPage && totalPage > 1 &&
                         <ReactPaginate
                             nextLabel="next"
                             onPageChange={handlePageClick}
@@ -186,6 +175,7 @@ const TableUser = () => {
                             containerClassName="pagination"
                             activeClassName="active"
                             renderOnZeroPageCount={null}
+                            forcePage={currPage - 1}
                         />
                     }
                 </div>
