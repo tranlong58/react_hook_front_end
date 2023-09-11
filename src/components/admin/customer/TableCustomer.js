@@ -4,9 +4,8 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import ReactPaginate from 'react-paginate';
 import AddPageCustomer from './AddPageCustomer';
-// import UserAddPage from './UserAddPage';
-// import UserEditPage from './UserEditPage';
-// import UserDeletePage from './UserDeletePage';
+import EditPageCustomer from './EditPageCustomer';
+import DeletePageCustomer from './DeletePageCustomer';
 
 const TableCustomer = () => {
     const [dataCutomers, setDataCustomers] = useState([]);
@@ -89,7 +88,7 @@ const TableCustomer = () => {
                 </Modal.Body>
             </Modal>
 
-            {/*
+            {/* Edit modal */}
             <Modal show={showEditModal} size='lg' onHide={handleCloseEditModal}>
                 <Modal.Header closeButton>
                     <Modal.Title></Modal.Title>
@@ -103,7 +102,7 @@ const TableCustomer = () => {
                 </Modal.Body>
             </Modal>
 
-            
+            {/* Delete modal */}
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
                 <Modal.Header closeButton>
                     <Modal.Title></Modal.Title>
@@ -115,7 +114,7 @@ const TableCustomer = () => {
                         customer={deleting}
                     />
                 </Modal.Body>
-            </Modal> */}
+            </Modal>
 
             <div className="container-customer-table">
                 <div className="title-table">
@@ -130,8 +129,8 @@ const TableCustomer = () => {
                         <tr>
                             <th>ID</th>
                             <th>Email</th>
-                            <th>Name</th>
                             <th>Role</th>
+                            <th>Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -142,7 +141,7 @@ const TableCustomer = () => {
                                 <tr key={customer.id}>
                                     <td>{customer.id}</td>
                                     <td>{customer.email}</td>
-                                    <td>{customer.email === 'longtran5801@gmail.com' ? 'Admin' : 'Normal'}</td>
+                                    <td>{customer.email === 'longtran5801@gmail.com' ? 'Admin' : 'Guest'}</td>
                                     <td>{customer.name}</td>
                                     <td>
                                         <button className='edit-btn' onClick={() => handleShowEditModal(customer)}>Edit</button>
@@ -152,7 +151,6 @@ const TableCustomer = () => {
                             )
                         })}
                     </tbody>
-
                 </table>
 
                 <div className='page-navigation-table'>
