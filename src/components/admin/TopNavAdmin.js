@@ -6,9 +6,10 @@ const TopNavAdmin = () => {
         <div className="topnav-admin">
             <NavLink activeClassName="active-link" to="/admin" exact>Home</NavLink>
             <NavLink activeClassName="active-link" to="/admin/user" exact>User</NavLink>
+            <NavLink activeClassName="active-link" to="/admin/customer" exact>Customer</NavLink>
 
-            <Link to="/" exact className='to-login-page'>Log out</Link>
-            <Link to="/main" exact className='to-main-page'>Main</Link>
+            <Link to="/" className='to-login-page'>Log out</Link>
+            <Link to="/main" className='to-main-page'>Main</Link>
         </div>
     );
 }

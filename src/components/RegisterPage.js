@@ -1,13 +1,15 @@
 
-import { useHistory } from 'react-router-dom';
-import './LoginPage.scss';
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import './RegisterPage.scss';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const LoginPage = () => {
+
+const RegisterPage = () => {
     const history = useHistory();
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
@@ -27,17 +29,27 @@ const LoginPage = () => {
         }
     };
 
-    const handleSubmit = () => {
-        if (email.trim() !== '' && pass.trim() !== '') {
+
+    const handleSubmit = async () => {
+        let dataNewCustomer = {
+            name: name,
+            email: email,
+            pass: pass,
+        }
+
+        if (name.trim() !== '' && email.trim() !== '' && pass.trim() !== '') {
             if (dataCustomers.find(customer => customer.email === email)) {
-                if (dataCustomers.find(customer => customer.pass === pass)) {
-                    alert('success');
-                    history.push('/main');
-                }
-                else alert('wrong pass');
+                alert('email was used');
+            } else {
+                await axios.post('http://localhost:8888/api/create-customer', dataNewCustomer); //create new customer
+                history.push('/');
             }
-            else alert('wrong email');
+
         } else {
+            if (name.trim() === '') {
+                alert(`'Name' can not empty`);
+                return;
+            }
             if (email.trim() === '') {
                 alert(`'Email' can not empty`);
                 return;
@@ -50,10 +62,15 @@ const LoginPage = () => {
     }
 
     return (
-        <main className='main-login'>
+        <main className='main-register'>
             <div className="container">
-                <div className="login-form">
-                    <h1>Login to access</h1>
+                <div className="register-form">
+                    <h1>Register new acount</h1>
+                    <div className="input-box">
+                        <i ></i>
+                        <label>Name</label>
+                        <input required type="text" value={name} onChange={(event) => setName(event.target.value)}></input>
+                    </div>
                     <div className="input-box">
                         <i ></i>
                         <label>Email</label>
@@ -66,11 +83,11 @@ const LoginPage = () => {
                     </div>
                     <div className="btn-box">
                         <button onClick={handleSubmit}>
-                            Login
+                            Register
                         </button>
                     </div>
                     <div>
-                        <Link to='/register'>Don't have an account? Register here.</Link>
+                        <Link to='/'>Back to login.</Link>
                     </div>
                 </div>
             </div>
@@ -78,4 +95,4 @@ const LoginPage = () => {
     );
 }
 
-export default LoginPage;
+export default RegisterPage;

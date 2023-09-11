@@ -37,7 +37,6 @@ const UserAddPage = (props) => {
                 return;
             }
         }
-
     }
 
     return (

@@ -1,26 +1,28 @@
-import './TableUser.scss';
+import './TableCustomer.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import ReactPaginate from 'react-paginate';
-import UserAddPage from './UserAddPage';
-import UserEditPage from './UserEditPage';
-import UserDeletePage from './UserDeletePage';
+import AddPageCustomer from './AddPageCustomer';
+// import UserAddPage from './UserAddPage';
+// import UserEditPage from './UserEditPage';
+// import UserDeletePage from './UserDeletePage';
 
-const TableUser = () => {
-    const [dataUsers, setDataUsers] = useState([]);
+const TableCustomer = () => {
+    const [dataCutomers, setDataCustomers] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
 
     useEffect(() => {
-        fetchUser(currPage);
+        fetchCustomer(currPage);
     }, [currPage]);
 
-    const fetchUser = async (page) => {
+    const fetchCustomer = async (page) => {
         try {
-            const response = await axios.get(`http://localhost:8888/api/show-user?page=${page}`);
-            setTotalPage(response.data.numPage);
-            setDataUsers(response.data.usersByPage);
+            const response = await axios.get(`http://localhost:8888/api/read-customer?page=${page}`);
+            setTotalPage(response.data.totalPage);
+            setDataCustomers(response.data.customersByPage);
+            //console.log(response);
         } catch (error) {
             // Xử lý lỗi nếu cần thiết
         }
@@ -32,13 +34,13 @@ const TableUser = () => {
 
     const handleFetch = async (type) => {
         if (type === 'delete') {
-            if (dataUsers.length > 1) await fetchUser(currPage);
+            if (dataCutomers.length > 1) await fetchCustomer(currPage);
             else {
-                await fetchUser(currPage - 1);
+                await fetchCustomer(currPage - 1);
                 setCurrPage(currPage - 1);
             }
         }
-        else await fetchUser(currPage);
+        else await fetchCustomer(currPage);
     }
 
     //add modal
@@ -51,26 +53,26 @@ const TableUser = () => {
     //edit modal
     const [showEditModal, setShowEditModal] = useState(false);
     const handleCloseEditModal = () => {
-        setEditUser(null);
+        setEditing(null);
         setShowEditModal(false);
     };
-    const handleShowEditModal = (user) => {
-        setEditUser(user);
+    const handleShowEditModal = (customer) => {
+        setEditing(customer);
         setShowEditModal(true);
     };
-    const [editUser, setEditUser] = useState(null); //user dang duoc select de Edit
+    const [editing, setEditing] = useState(null); //customer editing
 
     //delete modal
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const handleCloseDeleteModal = () => {
-        setDeleteUser(null);
+        setDeleting(null);
         setShowDeleteModal(false);
     };
-    const handleShowDeleteModal = (user) => {
-        setDeleteUser(user);
+    const handleShowDeleteModal = (customer) => {
+        setDeleting(customer);
         setShowDeleteModal(true);
     };
-    const [deleteUser, setDeleteUser] = useState(null); //user dang duoc select de Delete
+    const [deleting, setDeleting] = useState(null); //customer deleting
 
     return (
         <>
@@ -80,44 +82,44 @@ const TableUser = () => {
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UserAddPage
+                    <AddPageCustomer
                         handleClose={handleCloseAddModal}
                         handleFetch={handleFetch}
                     />
                 </Modal.Body>
             </Modal>
 
-            {/* Edit modal */}
+            {/*
             <Modal show={showEditModal} size='lg' onHide={handleCloseEditModal}>
                 <Modal.Header closeButton>
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UserEditPage
+                    <EditPageCustomer
                         handleClose={handleCloseEditModal}
                         handleFetch={handleFetch}
-                        user={editUser}
+                        customer={editing}
                     />
                 </Modal.Body>
             </Modal>
 
-            {/* Delete modal */}
+            
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
                 <Modal.Header closeButton>
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UserDeletePage
+                    <DeletePageCustomer
                         handleClose={handleCloseDeleteModal}
                         handleFetch={handleFetch}
-                        user={deleteUser}
+                        customer={deleting}
                     />
                 </Modal.Body>
-            </Modal>
+            </Modal> */}
 
-            <div className="container-user-table">
+            <div className="container-customer-table">
                 <div className="title-table">
-                    <div className='text'>Users list</div>
+                    <div className='text'>Customers list</div>
                     <div className='add-btn'>
                         <button onClick={handleShowAddModal}>Add new</button>
                     </div>
@@ -129,22 +131,22 @@ const TableUser = () => {
                             <th>ID</th>
                             <th>Email</th>
                             <th>Name</th>
-                            <th>City</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {dataUsers && dataUsers.map(user => {
+                        {dataCutomers && dataCutomers.map(customer => {
                             return (
-                                <tr key={user.id}>
-                                    <td>{user.id}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.name}</td>
-                                    <td>{user.city}</td>
+                                <tr key={customer.id}>
+                                    <td>{customer.id}</td>
+                                    <td>{customer.email}</td>
+                                    <td>{customer.email === 'longtran5801@gmail.com' ? 'Admin' : 'Normal'}</td>
+                                    <td>{customer.name}</td>
                                     <td>
-                                        <button className='edit-btn' onClick={() => handleShowEditModal(user)}>Edit</button>
-                                        <button className='delete-btn' onClick={() => handleShowDeleteModal(user)}>Delete</button>
+                                        <button className='edit-btn' onClick={() => handleShowEditModal(customer)}>Edit</button>
+                                        <button className='delete-btn' onClick={() => handleShowDeleteModal(customer)}>Delete</button>
                                     </td>
                                 </tr>
                             )
@@ -184,4 +186,4 @@ const TableUser = () => {
     );
 }
 
-export default TableUser;
+export default TableCustomer;
