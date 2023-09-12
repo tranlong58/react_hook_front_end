@@ -8,8 +8,6 @@ import RegisterPage from './components/RegisterPage';
 import TopNavMain from './components/main/TopNavMain';
 
 import TopNavAdmin from './components/admin/TopNavAdmin';
-import TableUser from './components/admin/TableUser';
-
 import TableCustomer from './components/admin/customer/TableCustomer';
 
 
@@ -25,13 +23,6 @@ const App = () => {
               <TopNavAdmin />
             </header>
             <h1 style={{ marginTop: '10px' }} >Admin page.</h1>
-          </Route>
-
-          <Route path='/admin/user' exact>
-            <header className="App-header">
-              <TopNavAdmin />
-            </header>
-            <TableUser />
           </Route>
 
           <Route path='/admin/customer' exact>

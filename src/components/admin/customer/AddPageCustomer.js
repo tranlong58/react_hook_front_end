@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import './AddPageCustomer.scss';
+import { toast } from 'react-toastify';
 
 const AddPageCustomer = (props) => {
     const { handleClose, handleFetch } = props;
@@ -26,6 +27,33 @@ const AddPageCustomer = (props) => {
         }
     };
 
+    const isValidInput = () => {
+        if (name.trim() === '') {
+            toast.error(`'Name' can not empty`);
+            return false;
+        }
+        if (email.trim() === '') {
+            toast.error(`'Email' can not empty`);
+            return false;
+        }
+        if (pass.trim() === '') {
+            toast.error(`'Password' can not empty`);
+            return false;
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!emailRegex.test(email)) {
+            toast.error('Invalid email');
+            return false;
+        }
+        if (dataCustomers.find(customer => customer.email === email)) {
+            toast.error('Email was used');
+            return false;
+        }
+
+        return true;
+    }
+
     const handleSubmit = async () => {
         let dataNewCustomer = {
             name: name,
@@ -33,51 +61,38 @@ const AddPageCustomer = (props) => {
             pass: pass,
         }
 
-        if (email.trim() !== '' && name.trim() !== '' && pass.trim() !== '') {
-            if (dataCustomers.find(customer => customer.email === email)) {
-                alert('email was used');
-            } else {
-                await axios.post('http://localhost:8888/api/create-customer', dataNewCustomer); //create new customer
-                handleFetch('add');
-                handleClose();
-            }
-        } else {
-            if (name.trim() === '') {
-                alert(`'Name' can not empty`);
-                return;
-            }
-            if (email.trim() === '') {
-                alert(`'Email' can not empty`);
-                return;
-            }
-            if (pass.trim() === '') {
-                alert(`'Password' can not empty`);
-                return;
-            }
+        const check = isValidInput();
+        if (check) {
+            await axios.post('http://localhost:8888/api/create-customer', dataNewCustomer); //create new customer
+            handleFetch('add');
+            handleClose();
+            toast.success('Add success');
         }
     }
 
     return (
-        <div className="form-create-customer">
-            <fieldset>
-                <legend>Create customer</legend>
-                <div className="input-group">
-                    <label>Name: </label>
-                    <input required type="text" value={name} onChange={(event) => setName(event.target.value)}></input>
-                </div>
-                <div className="input-group">
-                    <label>Email: </label>
-                    <input required type="text" value={email} onChange={(event) => setEmail(event.target.value)}></input>
-                </div>
-                <div className="input-group">
-                    <label>Password: </label>
-                    <input required type="password" value={pass} onChange={(event) => setPass(event.target.value)}></input>
-                </div>
-                <div>
-                    <button onClick={handleSubmit}>Save</button>
-                </div>
-            </fieldset>
-        </div>
+        <>
+            <div className="form-create-customer">
+                <fieldset>
+                    <legend>Create customer</legend>
+                    <div className="input-group">
+                        <label>Name: </label>
+                        <input required type="text" value={name} onChange={(event) => setName(event.target.value)}></input>
+                    </div>
+                    <div className="input-group">
+                        <label>Email: </label>
+                        <input required type="text" value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                    </div>
+                    <div className="input-group">
+                        <label>Password: </label>
+                        <input required type="password" value={pass} onChange={(event) => setPass(event.target.value)}></input>
+                    </div>
+                    <div>
+                        <button onClick={handleSubmit}>Save</button>
+                    </div>
+                </fieldset>
+            </div>
+        </>
     );
 }
 

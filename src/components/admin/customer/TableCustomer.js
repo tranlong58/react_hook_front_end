@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import ReactPaginate from 'react-paginate';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import AddPageCustomer from './AddPageCustomer';
 import EditPageCustomer from './EditPageCustomer';
 import DeletePageCustomer from './DeletePageCustomer';
@@ -180,6 +183,19 @@ const TableCustomer = () => {
                     }
                 </div>
             </div>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </>
     );
 }

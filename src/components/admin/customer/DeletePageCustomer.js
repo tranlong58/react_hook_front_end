@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import './DeletePageCustomer.scss';
 
 const DeletePageCustomer = (props) => {
@@ -20,6 +21,7 @@ const DeletePageCustomer = (props) => {
         await axios.delete(`http://localhost:8888/api/delete-customer`, { data });
         handleFetch('delete');
         handleClose();
+        toast.success('Delete success');
     }
 
     return (
