@@ -9,6 +9,7 @@ import TopNavMain from './components/main/TopNavMain';
 
 import TopNavAdmin from './components/admin/TopNavAdmin';
 import TableCustomer from './components/admin/customer/TableCustomer';
+import TableCategory from './components/admin/category/TableCategory';
 
 
 const App = () => {
@@ -31,6 +32,15 @@ const App = () => {
             </header>
             <div>
               <TableCustomer />
+            </div>
+          </Route>
+
+          <Route path='/admin/category' exact>
+            <header className="App-header">
+              <TopNavAdmin />
+            </header>
+            <div>
+              <TableCategory />
             </div>
           </Route>
 

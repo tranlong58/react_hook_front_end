@@ -1,4 +1,4 @@
-import './TableCustomer.scss';
+import './TableCategory.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
@@ -6,24 +6,24 @@ import ReactPaginate from 'react-paginate';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import AddPageCustomer from './AddPageCustomer';
-import EditPageCustomer from './EditPageCustomer';
-import DeletePageCustomer from './DeletePageCustomer';
+import AddPageCategory from './AddPageCategory';
+import EditPageCategory from './EditPageCategory';
+import DeletePageCategory from './DeletePageCategory';
 
-const TableCustomer = () => {
-    const [dataCustomers, setDataCustomers] = useState([]);
+const TableCategory = () => {
+    const [dataCategory, setDataCategory] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
 
     useEffect(() => {
-        fetchCustomer(currPage);
+        fetchCategory(currPage);
     }, [currPage]);
 
-    const fetchCustomer = async (page) => {
+    const fetchCategory = async (page) => {
         try {
-            const response = await axios.get(`http://localhost:8888/api/read-customer?page=${page}`);
+            const response = await axios.get(`http://localhost:8888/api/read-category?page=${page}`);
             setTotalPage(response.data.totalPage);
-            setDataCustomers(response.data.customersByPage);
+            setDataCategory(response.data.categoryByPage);
             //console.log(response);
         } catch (error) {
             // Xử lý lỗi nếu cần thiết
@@ -36,13 +36,13 @@ const TableCustomer = () => {
 
     const handleFetch = async (type) => {
         if (type === 'delete') {
-            if (dataCustomers.length > 1) await fetchCustomer(currPage);
+            if (dataCategory.length > 1) await fetchCategory(currPage);
             else {
-                await fetchCustomer(currPage - 1);
+                await fetchCategory(currPage - 1);
                 setCurrPage(currPage - 1);
             }
         }
-        else await fetchCustomer(currPage);
+        else await fetchCategory(currPage);
     }
 
     //add modal
@@ -58,11 +58,11 @@ const TableCustomer = () => {
         setEditing(null);
         setShowEditModal(false);
     };
-    const handleShowEditModal = (customer) => {
-        setEditing(customer);
+    const handleShowEditModal = (category) => {
+        setEditing(category);
         setShowEditModal(true);
     };
-    const [editing, setEditing] = useState(null); //customer editing
+    const [editing, setEditing] = useState(null); //category editing
 
     //delete modal
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -70,11 +70,11 @@ const TableCustomer = () => {
         setDeleting(null);
         setShowDeleteModal(false);
     };
-    const handleShowDeleteModal = (customer) => {
-        setDeleting(customer);
+    const handleShowDeleteModal = (category) => {
+        setDeleting(category);
         setShowDeleteModal(true);
     };
-    const [deleting, setDeleting] = useState(null); //customer deleting
+    const [deleting, setDeleting] = useState(null); //category deleting
 
     return (
         <>
@@ -84,7 +84,7 @@ const TableCustomer = () => {
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddPageCustomer
+                    <AddPageCategory
                         handleClose={handleCloseAddModal}
                         handleFetch={handleFetch}
                     />
@@ -97,10 +97,10 @@ const TableCustomer = () => {
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditPageCustomer
+                    <EditPageCategory
                         handleClose={handleCloseEditModal}
                         handleFetch={handleFetch}
-                        customer={editing}
+                        category={editing}
                     />
                 </Modal.Body>
             </Modal>
@@ -111,17 +111,17 @@ const TableCustomer = () => {
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <DeletePageCustomer
+                    <DeletePageCategory
                         handleClose={handleCloseDeleteModal}
                         handleFetch={handleFetch}
-                        customer={deleting}
+                        category={deleting}
                     />
                 </Modal.Body>
             </Modal>
 
-            <div className="container-customer-table">
+            <div className="container-category-table">
                 <div className="title-table">
-                    <div className='text'>Customers list</div>
+                    <div className='text'>Category list</div>
                     <div className='add-btn'>
                         <button onClick={handleShowAddModal}>Add new</button>
                     </div>
@@ -131,24 +131,22 @@ const TableCustomer = () => {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Email</th>
-                            <th>Role</th>
                             <th>Name</th>
+                            <th>Kind</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {dataCustomers && dataCustomers.map(customer => {
+                        {dataCategory && dataCategory.map(category => {
                             return (
-                                <tr key={customer.id}>
-                                    <td>{customer.id}</td>
-                                    <td>{customer.email}</td>
-                                    <td>{customer.email === 'longtran5801@gmail.com' ? 'Admin' : 'Guest'}</td>
-                                    <td>{customer.name}</td>
+                                <tr key={category.id}>
+                                    <td>{category.id}</td>
+                                    <td>{category.name}</td>
+                                    <td>{category.kind}</td>
                                     <td>
-                                        <button className='edit-btn' onClick={() => handleShowEditModal(customer)}>Edit</button>
-                                        <button className='delete-btn' onClick={() => handleShowDeleteModal(customer)}>Delete</button>
+                                        <button className='edit-btn' onClick={() => handleShowEditModal(category)}>Edit</button>
+                                        <button className='delete-btn' onClick={() => handleShowDeleteModal(category)}>Delete</button>
                                     </td>
                                 </tr>
                             )
@@ -200,4 +198,4 @@ const TableCustomer = () => {
     );
 }
 
-export default TableCustomer;
+export default TableCategory;

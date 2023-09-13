@@ -1,0 +1,131 @@
+.container-category-table {
+    width: 100%;
+    //padding-bottom: 50px;
+    // background-color: red;
+
+    .title-table {
+        font-size: 30px;
+        font-weight: bold;
+        margin-top: 20px;
+        //display: flex;
+        position: relative;
+        text-align: center;
+
+        .add-btn {
+            position: absolute;
+            right: 30px;
+            top: -3px;
+
+            a,
+            button {
+                display: block;
+                background-color: #235ff5;
+                color: white;
+                border: none;
+                padding: 8px 8px;
+                text-align: center;
+                text-decoration: none;
+                font-size: 20px;
+                font-weight: 500;
+            }
+
+            a:hover,
+            button:hover {
+                opacity: 0.6;
+            }
+        }
+
+        .add-btn:hover {
+            background-color: #ddd;
+        }
+    }
+
+    .content-table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: calc(100% - 60px);
+        margin: 10px 30px 0;
+        font-size: 20px;
+
+        tr:nth-child(even) {
+            color: black;
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(odd) {
+            color: black;
+            background-color: white;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        th {
+            text-align: left;
+            background-color: #3fdbec;
+            color: black;
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+        }
+
+        th:last-child {
+            text-align: center;
+        }
+
+        td {
+            text-align: left;
+            color: black;
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+
+            a,
+            button {
+                color: black;
+                border: none;
+                padding: 4px 8px;
+                margin: 0px 8px;
+                text-align: center;
+                text-decoration: none;
+                font-size: 20px;
+            }
+
+            a:hover,
+            button:hover {
+                opacity: 0.6;
+                color: white;
+            }
+
+            .edit-btn {
+                background-color: #4CAF50;
+            }
+
+            .delete-btn {
+                background-color: #f44336;
+            }
+        }
+
+        td:last-child {
+            text-align: center;
+            width: 200px;
+        }
+
+    }
+
+    .page-navigation-table {
+        width: fit-content;
+        margin: 20px auto;
+
+        ul {
+            // padding: 20px;
+
+            li {
+
+                a {
+                    padding: 10px 20px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

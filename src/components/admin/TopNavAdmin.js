@@ -31,6 +31,7 @@ const TopNavAdmin = () => {
             <div className="topnav-admin">
                 <NavLink activeClassName="active-link" to="/admin" exact>Home</NavLink>
                 <NavLink activeClassName="active-link" to="/admin/customer" exact>Customer</NavLink>
+                <NavLink activeClassName="active-link" to="/admin/category" exact>Category</NavLink>
 
                 {/* <Link to="/" className='to-login-page'>Log out</Link> */}
                 <button className='to-login-page' onClick={() => handleShowLogoutModal()}>Log out</button>
