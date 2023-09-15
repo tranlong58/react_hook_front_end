@@ -6,6 +6,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 
 import TopNavMain from './components/main/TopNavMain';
+import TableTransaction from './components/main/transaction/TableTransaction';
 
 import TopNavAdmin from './components/admin/TopNavAdmin';
 import TableCustomer from './components/admin/customer/TableCustomer';
@@ -50,6 +51,15 @@ const App = () => {
               <TopNavMain />
             </header>
             <h1 style={{ marginTop: '10px' }} >Main page.</h1>
+          </Route>
+
+          <Route path='/main/transaction' exact>
+            <header className="App-header">
+              <TopNavMain />
+            </header>
+            <div>
+              <TableTransaction />
+            </div>
           </Route>
 
           {/* login page */}

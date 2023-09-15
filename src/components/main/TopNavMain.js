@@ -29,6 +29,7 @@ const TopNavMain = () => {
             </Modal>
             <div className="topnav-main">
                 <NavLink activeClassName="active-link" to="/main" exact>Home</NavLink>
+                <NavLink activeClassName="active-link" to="/main/transaction" exact>Transaction</NavLink>
 
                 {/* <Link to="/" className='to-login-page'>Log out</Link> */}
                 <button className='to-login-page' onClick={() => handleShowLogoutModal()}>Log out</button>
