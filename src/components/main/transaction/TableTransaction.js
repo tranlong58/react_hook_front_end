@@ -21,7 +21,7 @@ const TableTransaction = () => {
         const nowYear = nowDate.getFullYear();
         const nowMonth = nowDate.getMonth() + 1;
         const totalMonth = (nowYear - 2022) * 12 + nowMonth;
-
+        // console.log(dataTransaction);
         setTotalPage(totalMonth);
         fetchTransaction(currMonth, currYear);
     }, [currMonth, currYear]);
@@ -174,7 +174,7 @@ const TableTransaction = () => {
                         <tr>
                             <th>ID</th>
                             <th>Customer_id</th>
-                            <th>Category_id</th>
+                            <th>Category</th>
                             <th>Amount</th>
                             <th>Detail</th>
                             <th>Date</th>
@@ -183,13 +183,13 @@ const TableTransaction = () => {
                     </thead>
 
                     <tbody>
-                        {dataTransaction && dataTransaction.map(transaction => {
+                        {dataTransaction.length ? dataTransaction.map(transaction => {
                             return (
                                 <tr key={transaction.id}>
                                     <td>{transaction.id}</td>
                                     <td>{transaction.customer_id}</td>
-                                    <td>{transaction.category_id}</td>
-                                    <td>{transaction.amount}</td>
+                                    <td>{transaction.category_name}</td>
+                                    <td style={{ color: transaction.category_kind === 'Income' ? '#09d2fb' : 'red' }}>{transaction.amount}</td>
                                     <td>{transaction.detail}</td>
                                     <td>{transaction.date_created_format}</td>
                                     <td>
@@ -198,7 +198,11 @@ const TableTransaction = () => {
                                     </td>
                                 </tr>
                             )
-                        })}
+                        }) : (
+                            <tr>
+                                <td colSpan='7'>No transactions</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

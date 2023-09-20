@@ -107,12 +107,11 @@ const EditPageTransaction = (props) => {
                     <div className="input-group">
                         <label>Category: </label>
                         <select required value={category_id} onChange={(event) => setCategory_id(event.target.value)}>
-                            {dataCategory.map(item => {
+                            {dataCategory.sort((a, b) => a.kind.localeCompare(b.kind)).map(item => {
                                 return (
-                                    <option value={item.id} key={item.id}>{item.name}</option>
+                                    <option value={item.id} key={item.id} style={{ color: item.kind === 'Income' ? '#09d2fb' : 'red' }}>{item.name}</option>
                                 );
                             })}
-
                         </select>
                     </div>
                     <div className="input-group">
